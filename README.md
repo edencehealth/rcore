@@ -1,16 +1,16 @@
-# r-core
+# rcore
 
-A base image for eH containers that use R and Java.
+This repository contains the source code for building the Docker image which serves as the base image for several of the [edenceHealth](https://edence.health/) Docker images that depend on [the R software environment](https://www.r-project.org/).
 
-## nonroot user
+This image is based on the current debian "testing" release and it adds that distribution's default essential R packages, (such as `r-base-dev`, `r-recommended`, and `r-cran-remotes`) and OpenJDK 11.
 
-This container creates a `nonroot` user with the same uid/gid used by the
-"distoless" containers.
+## "nonroot" reduced privilege user account
 
-## txt2lock.R
+This image has a `nonroot` user with the same UID and GID used by the [Google "distoless"](https://github.com/GoogleContainerTools/distroless) images. This user account can be used in child images to improve runtime security (via the `USER nonroot` Dockerfile directive or via a `docker run` argument)
 
-This image contains the utility `txt2lock.R`. This is a utility for generating
-renv.lock files. It is on the execution path under `/bin`.
+## "txt2lock" lockfile generation helper
+
+This image contains the command-line utility `txt2lock.R`. This is a utility for generating `renv.lock` files from `renv.txt` files. By default it is installed in the execution path under `/bin`.
 
 ### txt2lock usage
 
