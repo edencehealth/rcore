@@ -8,11 +8,15 @@ This image is based on the current debian "testing" release and it adds that dis
 
 This image has a `nonroot` user with the same UID and GID used by the [Google "distoless"](https://github.com/GoogleContainerTools/distroless) images. This user account can be used in child images to improve runtime security (via the `USER nonroot` Dockerfile directive or via a `docker run` argument)
 
-## "txt2lock" lockfile generation helper
+## Utility Programs
+
+The image includes some utilities that are used by downstream consumers.
+
+### "txt2lock" lockfile generation helper
 
 This image contains the command-line utility `txt2lock.R`. This is a utility for generating `renv.lock` files from `renv.txt` files. By default it is installed in the execution path under `/bin`.
 
-### txt2lock usage
+#### txt2lock usage
 
 ```
 txt2lock
@@ -32,3 +36,7 @@ General options:
   -h, --help              Show this help message.
 
 ```
+
+### "patch4ref" patch script runner
+
+This utility is for running patch scripts based on a `GIT_REF` environment variable. The script is included from: <https://github.com/edencehealth/patch4ref/>
