@@ -76,7 +76,10 @@ RUN set -eux; \
     /var/cache/apt \
   ;
 
-COPY txt2lock.R /bin/
+COPY patch4ref.sh /bin/patch4ref
+COPY txt2lock.R /bin/txt2lock
+# for backward compat
+RUN ln -s /bin/txt2lock /bin/txt2lock.R
 
 FROM scratch
 
