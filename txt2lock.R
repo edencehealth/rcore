@@ -27,4 +27,4 @@ for (pkg in readLines(args$txtfile)) {
 }
 renv::settings$snapshot.type("all")
 renv::snapshot()
-cat(readLines("renv.lock"), sep="\n")
+cat(readLines("renv.lock"), sep = "\n")
