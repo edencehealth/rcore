@@ -1,5 +1,5 @@
 #!/usr/bin/Rscript
-library('docopt')
+library("docopt")
 
 'txt2lock
 
@@ -22,6 +22,9 @@ General options:
 args <- docopt(doc)
 
 renv::init()
-for (pkg in readLines(args$txtfile)) { renv::install(pkg) }
+for (pkg in readLines(args$txtfile)) {
+  renv::install(pkg)
+}
 renv::settings$snapshot.type("all")
 renv::snapshot()
+cat(readLines("renv.lock"), sep = "\n")
