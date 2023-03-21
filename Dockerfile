@@ -76,9 +76,13 @@ RUN set -eux; \
     /var/cache/apt \
   ;
 
-COPY patch4ref.sh /bin/patch4ref
+RUN set -eux; \
+  curl --tlsv1.3 -sSL -o /bin/patch4ref \
+  # v1 is a floating ref updated by the edencehealth/patch4ref release workflow
+  "https://raw.githubusercontent.com/edencehealth/patch4ref/v1/patch4ref.sh"; \
+  chmod +x /bin/patch4ref;
 COPY txt2lock.R /bin/txt2lock
-# for backward compat
+# for backward compatibility
 RUN ln -s /bin/txt2lock /bin/txt2lock.R
 
 FROM scratch
