@@ -1,5 +1,5 @@
 # for updates, see: https://github.com/adoptium/temurin8-binaries/releases
-ARG TEMURIN_VERSION="jdk8u362-b09"
+ARG TEMURIN_VERSION="jdk8u372-b07"
 ARG JAVA_MAJOR_VERSION=8
 ARG JAVA_HOME="/usr/lib/jvm/java-${JAVA_MAJOR_VERSION}-temurin"
 
@@ -37,6 +37,7 @@ RUN --mount=type=cache,sharing=private,target=/var/cache/apt \
     procps \
     r-base \
     r-base-dev \
+    r-cran-argparse \
     r-cran-docopt \
     r-cran-littler \
     r-cran-remotes \
