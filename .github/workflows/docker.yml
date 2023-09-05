@@ -14,5 +14,5 @@ jobs:
     uses: edencehealth/workflows/.github/workflows/dockerimage.yml@main
     with:
       container_name: rcore
-      push_readme: README.md
+      push_readme: ./README.md
     secrets: inherit
