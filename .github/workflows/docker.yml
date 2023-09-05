@@ -6,10 +6,13 @@ on:
       - main
     tags:
       - '*.*.*'
+  schedule:
+    - cron: '45 10 * * *' # randcron
 
 jobs:
   image:
-    uses: edencehealth/workflows/.github/workflows/dockerimage.yml@v1
+    uses: edencehealth/workflows/.github/workflows/dockerimage.yml@main
     with:
       container_name: rcore
+      push_readme: README.md
     secrets: inherit
