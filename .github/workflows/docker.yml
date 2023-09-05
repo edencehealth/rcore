@@ -11,7 +11,7 @@ on:
 
 jobs:
   image:
-    uses: edencehealth/workflows/.github/workflows/dockerimage.yml@main
+    uses: edencehealth/workflows/.github/workflows/dockerimage.yml@v1
     with:
       container_name: rcore
       push_readme: README.md
