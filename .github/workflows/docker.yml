@@ -7,7 +7,7 @@ on:
     tags:
       - '*.*.*'
   schedule:
-    - cron: '45 10 * * *' # randcron
+    - cron: '45 19 * * *' # randcron
 
 jobs:
   image:
