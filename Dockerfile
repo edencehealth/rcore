@@ -1,5 +1,5 @@
 # for updates, see: https://github.com/adoptium/temurin8-binaries/releases
-ARG TEMURIN_VERSION="jdk-11.0.20.1+1"
+ARG TEMURIN_VERSION="jdk-11.0.21+9"
 ARG JAVA_MAJOR_VERSION=11
 ARG JAVA_HOME="/usr/lib/jvm/java-${JAVA_MAJOR_VERSION}-temurin"
 
