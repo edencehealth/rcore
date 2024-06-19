@@ -1,5 +1,5 @@
-# for updates, see: https://github.com/adoptium/temurin8-binaries/releases
-ARG TEMURIN_VERSION="jdk-11.0.21+9"
+# for updates, see: https://github.com/adoptium/temurin11-binaries/releases
+ARG TEMURIN_VERSION="jdk-11.0.23+9"
 ARG JAVA_MAJOR_VERSION=11
 ARG JAVA_HOME="/usr/lib/jvm/java-${JAVA_MAJOR_VERSION}-temurin"
 
@@ -88,8 +88,6 @@ RUN set -eux; \
 COPY txt2lock.R /bin/txt2lock
 # for backward compatibility
 RUN ln -s /bin/txt2lock /bin/txt2lock.R
-
-
 
 FROM scratch
 
