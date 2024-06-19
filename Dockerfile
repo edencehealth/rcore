@@ -3,7 +3,7 @@ ARG TEMURIN_VERSION="jdk-11.0.23+9"
 ARG JAVA_MAJOR_VERSION=11
 ARG JAVA_HOME="/usr/lib/jvm/java-${JAVA_MAJOR_VERSION}-temurin"
 
-FROM debian:stable-slim
+FROM debian:stable-slim as debian
 LABEL maintainer="edenceHealth <info@edence.health>"
 
 ARG AG="apt-get -yq --no-install-recommends"
@@ -45,15 +45,17 @@ RUN --mount=type=cache,sharing=private,target=/var/cache/apt \
   ;
 
 # ready to import these global build args now
-ARG TEMURIN_VERSION
-ARG JAVA_MAJOR_VERSION
 ARG JAVA_HOME
-RUN --mount=type=cache,target=/downloads set -ex; \
-  # we're supporting x86_64 and aarch64; the repo refers to "x86_64" as "x64"
-  ARCH=$(arch); \
-  if [ "$ARCH" = "x86_64" ]; then ARCH="x64"; fi; \
-  # example: TEMURIN_VERSION="jdk8u362-b09" -> TEMURIN_SHORT_VERSION="8u362b09"
-  TEMURIN_SHORT_VERSION=$(printf '%s' "${TEMURIN_VERSION##jdk}" | tr -d '-'); \
+ARG JAVA_MAJOR_VERSION
+ARG TARGETARCH
+ARG TEMURIN_VERSION
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+RUN --mount=type=cache,target=/downloads set -eux; \
+  case ${TARGETARCH} in \
+    "arm64") ARCH="aarch64"; ;; \
+    "x86_64") ARCH="x64"; ;; \
+    *) ARCH="${TARGETARCH}"; ;; \
+  esac; \
   TEMURIN_PATHNAME_VERSION=$(printf '%s' "${TEMURIN_VERSION}" | sed 's/\+/%2B/g'); \
   TEMURIN_FILENAME_VERSION=$(printf '%s' "${TEMURIN_VERSION##jdk}" | tr -d '-' | tr -C 'A-Za-z0-9_.-' '_'); \
   TEMURIN_FILENAME="OpenJDK${JAVA_MAJOR_VERSION}U-jdk_${ARCH}_linux_hotspot_${TEMURIN_FILENAME_VERSION}.tar.gz"; \
@@ -105,7 +107,7 @@ ENV JAVA_HOME=${JAVA_HOME}
 ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${JAVA_HOME}/bin:${JAVA_HOME}/jre/bin"
 
 # copy the files from the previous build stage
-COPY --from=0 / /
+COPY --from=debian / /
 
 # simple post-copy check for java functionality
 RUN set -eux; \
@@ -122,6 +124,7 @@ RUN set -eux; \
     >/root/.Rprofile; \
   R -e "remotes::install_github('rstudio/renv${RENV_VERSION}')";
 
+# hadolint ignore=SC2016
 RUN set -eux; \
   R -e 'install.packages("rJava")'; \
   R -e 'rJava::J("java.lang.System")$getProperty("java.version")';
