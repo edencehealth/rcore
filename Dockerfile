@@ -52,8 +52,8 @@ ARG TEMURIN_VERSION
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN --mount=type=cache,target=/downloads set -eux; \
   case ${TARGETARCH} in \
+    "amd64"|"x86_64") ARCH="x64"; ;; \
     "arm64") ARCH="aarch64"; ;; \
-    "x86_64") ARCH="x64"; ;; \
     *) ARCH="${TARGETARCH}"; ;; \
   esac; \
   TEMURIN_PATHNAME_VERSION=$(printf '%s' "${TEMURIN_VERSION}" | sed 's/\+/%2B/g'); \
