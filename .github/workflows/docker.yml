@@ -5,9 +5,12 @@ on:
     branches:
       - main
     tags:
-      - '*.*.*'
+      - "*.*.*"
+  pull_request:
+    branches:
+      - main
   schedule:
-    - cron: '45 19 * * *' # randcron
+    - cron: "45 19 * * *" # randcron
 
 jobs:
   image:
