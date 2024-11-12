@@ -1,9 +1,9 @@
 # for updates, see: https://github.com/adoptium/temurin11-binaries/releases
-ARG TEMURIN_VERSION="jdk-11.0.23+9"
+ARG TEMURIN_VERSION="jdk-11.0.25+9"
 ARG JAVA_MAJOR_VERSION=11
 ARG JAVA_HOME="/usr/lib/jvm/java-${JAVA_MAJOR_VERSION}-temurin"
 
-FROM debian:stable-slim as debian
+FROM debian:stable-slim AS debian
 LABEL maintainer="edenceHealth <info@edence.health>"
 
 ARG AG="apt-get -yq --no-install-recommends"
